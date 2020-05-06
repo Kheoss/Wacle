@@ -9,7 +9,7 @@ After the installation is complete we can run our wfile in the command line usin
      `wackle [your_file.wfl]`
      
 #### How to write a wfile?
-Mastering making a wfile is very easy as it wacle uses an easy to learn syntax.
+Mastering making a wfile is very easy as wacle uses an easy to learn syntax.Just follow the the examples below!
 
 #### Some examples
 
