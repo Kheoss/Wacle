@@ -55,7 +55,11 @@ delete | Triggers when the file has been deleted
 
 * ##### Timers !
 
-`SetTimer 3000 {
-print 'Block Executed'
+`SetInterval 3000 {
+print "Block Executed once every 3 miliseconds"
+}`
+
+`SetTimeOut 3000 {
+print "Block executed after 3000 miliseconds"
 }`
 
