@@ -34,6 +34,17 @@ and use it in the context!
 
 `print MyVariable`
 
+* ##### Parenthesis operation!
+
+You can assign a value from parenthesis expresion!
+
+`secondWord : string`
+
+`secondWord = "Is"`
+
+`myVariable = ("Wacle"+secondWord+"Awsome!")`
+
+Result : WacleIsAwsome
 
 * ##### Use "Brut Commands" in order to insert a bash command directly into the command line!
 `BrutCommand "g++ [...]"` or `BrutCommand "tracert [...]"` :grin:
@@ -79,4 +90,6 @@ lines | Read the document line by line
 words | Read the document word by word
 chars | Read the document char by char
 
+* ##### Move files !
 
+`FileMove "C:/OriginalLocation/file" "C:/NewLocation"`
