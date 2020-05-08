@@ -63,3 +63,20 @@ print "Block Executed once every 3 miliseconds"
 print "Block executed after 3000 miliseconds"
 }`
 
+* ##### Read from files/documents !
+Reading from a document requires a variable in which will be stored the data.
+
+`myVariable : string`
+
+
+`ReadFile "filename.txt" [settings] myVariable {
+print myVariable
+}`
+
+Setting | Effect
+------------ | -------------
+lines | Read the document line by line
+words | Read the document word by word
+chars | Read the document char by char
+
+
