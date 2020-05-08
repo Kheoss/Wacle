@@ -1,4 +1,4 @@
-#define spaceInStringStructure '-'
+#define spaceInStringStructure '`'
 #include "iostream"
 #include "fstream"
 #include "string"
@@ -9,9 +9,13 @@
 #include "algorithm"
 #include "direct.h"
 #include "sys/stat.h"
+#include <sys/types.h>
 #include "chrono"
 #include "time.h"
 #include "thread"
+#include "fstream"
+#include "stack"
+#include <dirent.h>
 
 namespace Parser{
   //token primitive Types [commands/params/operator/....]
@@ -23,7 +27,8 @@ VARIABLE,
 HARDSTRING,
 HARDNUMBER,
 BLOCK,
-FLAGLIST
+FLAGLIST,
+PARANT
 };
 enum VariableType{
   STRING,
@@ -64,6 +69,9 @@ namespace Commands{
   void AddFileEventListener(int&, std::vector<std::pair<Parser::TokenPrimaryType, std::string> >&);
   void SetTimeOut(int&, std::vector<std::pair<Parser::TokenPrimaryType, std::string> >&);
   void SetInterval(int&, std::vector<std::pair<Parser::TokenPrimaryType, std::string> >&);
+  void ReadAFile(int&, std::vector<std::pair<Parser::TokenPrimaryType, std::string> >&);
+  void GetSubDirs(int&, std::vector<std::pair<Parser::TokenPrimaryType, std::string> > &);
+  void FileMove(int&, std::vector<std::pair<Parser::TokenPrimaryType,std::string> >&);
 }
 namespace Operators{
   void _declareVar(std::string& , std::string&);
@@ -71,6 +79,9 @@ namespace Operators{
 }
 namespace FileManager{
   std::string workingDir();
+  void ReadAllFromFile(std::string, std::string, std::string, std::string);
+  void GetSubDirectories(std::string, std::string, std::string, std::string);
+  void FileMove(std::string, std::string);
 }
 
 namespace EventManagement{

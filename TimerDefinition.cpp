@@ -1,7 +1,6 @@
 #include "mainHeader.hpp"
 
-Utility::Timer::Timer(){
-}
+Utility::Timer::Timer(){}
 
 void Utility::Timer::SetTimeout(int _timeOut, std::string _block){
      std::thread t([_timeOut,_block](){

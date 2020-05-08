@@ -3,13 +3,16 @@
     Parser::TokenPrimaryType Parser::GetTokenType(std::string& _token){
 
         if(Parser::_primary_tokens.find(_token) == Parser::_primary_tokens.end()){
-            
+
             if(Parser::_operators.find(_token) != Parser::_operators.end()){
                     return Parser::OPERATOR;
                 }
                    
             if(_token[0] == '"'){
                 return Parser::HARDSTRING;
+            }
+            if(_token[0] == '('){
+                return Parser::PARANT;
             }
             if(Parser::IsHardNumber(_token)){
                 return Parser::HARDNUMBER;
@@ -20,7 +23,7 @@
         return Parser::_primary_tokens[_token];
     }
 
-    void Parser::ExtractTokens(std::string& _code){
+       void Parser::ExtractTokens(std::string& _code){
             //endline parsing
             bool _isInStringValue = false;
             for(size_t index=0;index<_code.size();index++){
@@ -39,31 +42,39 @@
             //token extraction
             std::string _token;
             std::istringstream _tokenStream(_code);
-             bool isInBlock = false;
             int _nrBlocks = 0;
-            std::vector<std::pair<TokenPrimaryType, std::string> > _curBlock;
+            std::unordered_map <int, std::vector<std::pair<Parser::TokenPrimaryType, std::string> > > _extractedBlocks;
+            std::stack <int> _blockEndOrder;
             while(std::getline(_tokenStream,_token,' ')){
                 // TO DO : Exeption handling
 
                 if(_token.size() == 0) continue;
                 //flag split
-                if(_token == "{"){isInBlock = true;continue;}
-                if(_token == "}"){isInBlock = false;
-                std::string _value = "BL" + std::to_string(_nrBlocks);
-                Parser::_blockList.insert(make_pair(_value,_curBlock));
+                if(_token == "{"){
+                    _blockEndOrder.push(_nrBlocks);
+                    _extractedBlocks.insert(std::make_pair(_nrBlocks,std::vector<std::pair<Parser::TokenPrimaryType,std::string>>()));
+                    _nrBlocks++;
+                    continue;
+                }
+                if(_token == "}"){
+                    int _curBl = _blockEndOrder.top();
+                _blockEndOrder.pop();
+                std::string _value = "BL" + std::to_string(_curBl);
+                Parser::_blockList.insert(make_pair(_value,_extractedBlocks[_curBl]));
                 Parser::TokenPrimaryType _type = Parser::BLOCK;
-                Parser::_curTokens.push_back(std::make_pair(_type,_value));
-                _nrBlocks++;
-                _curBlock.clear();
+                if(_blockEndOrder.empty()){
+                    Parser::_curTokens.push_back(std::make_pair(_type,_value));
+                }else{
+                    _extractedBlocks[_blockEndOrder.top()].push_back(std::make_pair(_type,_value));
+                }
                 continue;
                 }
-
                 Parser::TokenPrimaryType _type = Parser::GetTokenType(_token);
                         if(_type == Parser::HARDSTRING){
                             std::replace(_token.begin(),_token.end(),spaceInStringStructure,' ');            
                         }
-                        if(isInBlock){
-                            _curBlock.push_back(std::make_pair(_type,_token));
+                        if(!_blockEndOrder.empty()){
+                            _extractedBlocks[_blockEndOrder.top()].push_back(std::make_pair(_type,_token));
                         }else{
                             Parser::_curTokens.push_back(std::make_pair(_type,_token));
                         }
@@ -100,24 +111,3 @@
         }
         return true;
     }
-
-    //Debugging stuff  
-    //   void Parser::ShowTokens(){
-        
-    //     for(size_t _tokenIndex=0;_tokenIndex < Parser::_curTokens.size();_tokenIndex++){
-    //         if(Parser::_curTokens[_tokenIndex].first == Parser::COMMAND){
-    //             std::cout<<"Command ";
-    //         }
-    //         else if(Parser::_curTokens[_tokenIndex].first == Parser::OPERATOR){
-    //             std::cout<<"OPERATOR ";
-    //         }
-    //         else if(Parser::_curTokens[_tokenIndex].first == Parser::STRING){
-    //             std::cout<<"STRING ";
-    //         }
-    //         else if(Parser::_curTokens[_tokenIndex].first == Parser::NUMBER){
-    //             std::cout<<"NUMBER ";
-    //         }
-    //         std::cout<<Parser::_curTokens[_tokenIndex].second<<"\n";
-    //     }
-
-    // }
