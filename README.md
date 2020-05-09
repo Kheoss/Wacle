@@ -93,3 +93,44 @@ chars | Read the document char by char
 * ##### Move files !
 
 `FileMove "C:/OriginalLocation/file" "C:/NewLocation"`
+
+* ##### Get SubDirectories 
+
+`_fileName : string`
+
+`GetSubDirectories _path [settings] _fileName {
+print _fileName
+}`
+
+
+Setting | Effect
+------------ | -------------
+norec | (No recurance).It does not look in subfolders for files
+ rec  | (Recurance).It does look in subfolders for files
+
+
+* ##### Loop!
+
+`x : int`
+
+`InRange x 1 5 [settings] {
+ print x
+}`
+
+Setting | Effect
+------------ | -------------
+increase | 
+decrease | 
+
+* ##### Conditional Statement
+
+` IF x [comparator] 3 {
+    print x
+    }`
+
+Setting | Effect
+------------ | -------------
+equals | true if x = 3 
+less   | true if x < 3
+greater | true if x > 3       
+
