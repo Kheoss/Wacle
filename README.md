@@ -4,7 +4,7 @@ Wacle is inspired by make/makefile utility tools.
 
 #### How it works?
 Wacle requires a wfile, which define a set of tasks to be executed.
-Ofcourse the first step is to install Wacle.
+Of course the first step is to install Wacle.
 After the installation is complete we can run our wfile in the command line using the command 
      `wackle [your_file.wfl]`
      
